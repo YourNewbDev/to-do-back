@@ -7,37 +7,45 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class TaskService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async upsert(payload: CreateTaskDto) {
-    return await this.prisma.task.upsert({
-      where: {
-        id: payload.taskId.id || ''
-      },
-      create: payload.task,
-      update: payload.task
+  // async upsert(payload: CreateTaskDto) {
+  //   return await this.prisma.task.upsert({
+  //     where: {
+  //       id: payload.taskId.id || ''
+  //     },
+  //     create: payload.task,
+  //     update: payload.task
+  //   })
+  // }
+
+  async create(payload: CreateTaskDto) {
+    return await this.prisma.task.create({
+      data: payload,
     })
   }
 
-  // async update(id: string, payload: UpdateTaskDto) {
-  //   const existingTask = await this.prisma.task.findUnique({
-  //     where: { id: id },
-  //   });
+  async update(id: string, payload: UpdateTaskDto) {
+    const existingTask = await this.prisma.task.findUnique({
+      where: {id},
+    });
   
-  //   if (!existingTask) {
-  //     throw new NotFoundException(`Task with id ${id} not found`);
-  //   }
+    if (!existingTask) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
 
-  //   const updateData = {...payload}
+    const updateData = {...payload}
   
-  //   return await this.prisma.task.update({
-  //     where: {
-  //       id: id
-  //     },
-  //     data: updateData
-  //   });
-  // }
+    return await this.prisma.task.update({
+      data: updateData,
+      where: {id}
+    });
+  }
 
   async findAll() {
-    return await this.prisma.task.findMany();
+    return await this.prisma.task.findMany({
+      orderBy: {
+        createdAt: "asc"
+      }
+    });
   }
 
   async findOne(id: string) {

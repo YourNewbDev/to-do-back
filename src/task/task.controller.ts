@@ -7,16 +7,22 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
+  // @Post()
+  // upsert(@Body() payload: CreateTaskDto) {
+  //   console.log(payload)
+  //   return this.taskService.upsert(payload);
+  // }
+
   @Post()
-  upsert(@Body() payload: CreateTaskDto) {
+  create(@Body() payload: CreateTaskDto) {
     console.log(payload)
-    return this.taskService.upsert(payload);
+    return this.taskService.create(payload);
   }
 
-  // @Put(':id')
-  // update(@Param('id') id: string, @Body() payload: UpdateTaskDto) {
-  //   return this.taskService.update(id, payload);
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() payload: UpdateTaskDto) {
+    return this.taskService.update(id, payload);
+  }
 
 
   @Get()
