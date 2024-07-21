@@ -5,5 +5,7 @@ import { UserController } from './user.controller';
 @Module({
   controllers: [UserController],
   providers: [UserService],
+  //Exports user service in order to use it on auth module
+  exports: [UserService]
 })
 export class UserModule {}

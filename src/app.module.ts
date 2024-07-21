@@ -7,7 +7,7 @@ import { TaskModule } from './task/task.module';
 @Module({
   imports: [UserModule, PrismaModule, ConfigModule.forRoot({
     isGlobal: true
-  }), UserModule, TaskModule],
+  }), TaskModule],
   // controllers: [AppController],
   // providers: [AppService],
 })

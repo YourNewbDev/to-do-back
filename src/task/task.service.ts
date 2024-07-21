@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -18,9 +18,13 @@ export class TaskService {
   // }
 
   async create(payload: CreateTaskDto) {
-    return await this.prisma.task.create({
-      data: payload,
-    })
+    try {
+      return await this.prisma.task.create({
+        data: payload,
+      })
+    } catch (error) {
+      throw new HttpException('Forbidden', HttpStatus.BAD_REQUEST)
+    }
   }
 
   async update(id: string, payload: UpdateTaskDto) {
