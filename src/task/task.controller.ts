@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, Req, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, Req, Put, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 
 @Controller('task')
 export class TaskController {
@@ -12,6 +13,7 @@ export class TaskController {
   //   console.log(payload)
   //   return this.taskService.upsert(payload);
   // }
+
 
   @Post()
   create(@Body() payload: CreateTaskDto) {
