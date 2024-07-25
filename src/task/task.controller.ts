@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request, Req, Put, U
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 
 @Controller('task')
 export class TaskController {
