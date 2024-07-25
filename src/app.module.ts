@@ -3,9 +3,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
-import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './auth/guard/accessToken.guard';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -13,9 +15,11 @@ import { AppService } from './app.service';
   }),
   UserModule, 
   PrismaModule, 
-  TaskModule, 
+  TaskModule,
   AuthModule],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
+  providers: [
+    { provide: APP_GUARD, useClass: AccessTokenGuard }
+  ],
 })
 export class AppModule {}

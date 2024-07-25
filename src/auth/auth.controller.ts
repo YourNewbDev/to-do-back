@@ -1,15 +1,30 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Response, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local.auth.guard';
+import { SignUpInput } from './dto/signup-input';
+import { SignInInput } from './dto/signin-input';
+import { Public } from 'src/decorator/public.decorator';
+
 
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-    //endpoint auth/login
-    @UseGuards(LocalAuthGuard) //Make authentication for LocalAuthGuard
-    @Post('login')
-    login(@Request() req): any {
-      return req.user // Return the authenticated user from LocalAuthGuard
-    }
+  @Public()
+  @Post('signup')
+  signUp(@Body() SignUpInput: SignUpInput, @Response() res) {
+    return this.authService.signUp(SignUpInput, res);
+  }
+
+  @Public()
+  @Post('signin')
+  signIn(@Body() SignInInput: SignInInput, @Request() req, @Response() res) {
+    return this.authService.signIn(SignInInput, req, res)
+  }
+
+  @Get('signout')
+  signout(@Request() req, @Response() res) {
+    return this.authService.signout(req, res)
+  }
+
+
 }
