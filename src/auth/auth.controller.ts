@@ -15,12 +15,15 @@ export class AuthController {
     return this.authService.signUp(SignUpInput, res);
   }
 
-  @Public()
+
+  // @Public()
   @Post('signin')
   signIn(@Body() SignInInput: SignInInput, @Request() req, @Response() res) {
     return this.authService.signIn(SignInInput, req, res)
   }
 
+
+  @Public()
   @Get('signout')
   signout(@Request() req, @Response() res) {
     return this.authService.signout(req, res)

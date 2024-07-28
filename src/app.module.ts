@@ -10,9 +10,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guard/accessToken.guard';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true
-  }),
+  imports: [
+  ConfigModule.forRoot({ isGlobal: true }),
   UserModule, 
   PrismaModule, 
   TaskModule,
